@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Media Player for testing video stream URLs (mp4,mkv,webm,m3u8)">
+  <link rel="canonical" href="https://mp-player.github.io/media">
+  <link rel="shortcut icon" href="files/images/favicon.png" type="image/png" size="any">
+  <link rel="apple-touch-icon" href="files/images/favicon.png">
+  <title>MP-Player (MediaPlay) | Testing Player</title>
+  <link href="files/sources/mediaplay.css" rel="stylesheet">
+  <script src="files/sources/mediaplay.js"></script>
+<style>
+  * {
+    margin: 0;
+    padding: 0;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    font-family: Helvatica,Arial,sans-serif;
+  }
+  ::selection {
+    color: #fff;
+    background-color: #00BFFF;
+  }
+  html, body {
+    width: 100vw;
+    height: 100vh;
+    padding-bottom: 50px;
+    background-color: rgb(255,255,255);
+    overflow-x: hidden;
+    overflow-y: auto;
+  }
+  @support (width:100dvw) and (height:100dvh) {
+    html, body {
+      width: 100dvw;
+      height: 100dvh;
+    }
+  }
+  header {
+    display: -webkit-flex;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    padding: 15px;
+    background-color: #4169E1;
+  }
+  header h2 {
+    width: fit-content;
+    font-weight: 700;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    user-select: none;
+  }
+  header h2 a {
+    color: #00BFFF;
+    text-decoration: none;
+  }
+  header div {
+    width: 50%;
+    text-align: center;
+  }
+  header div a {
+    display: inline-block;
+    white-space: nowrap;
+    color: #eee;
+    font-size: 0.9em;
+    font-weight: 500;
+    letter-spacing: 0.5px;
+    text-decoration-color: transparent;
+    margin: 3px 5px;
+  }
+  header div a[active] {
+    color: #00BFFF;
+    text-decoration-color: #ddd;
+    pointer-events: none;
+  }
+  .container-content {
+    position: absolute;
+    top: 100px;
+    left: 0;
+    right: 0;
+    bottom: auto;
+    margin: auto;
+    padding: 50px 0 50px 0;
+    width: 85%;
+    max-width: 800px;
+    height: fit-content;
+  }
+  .container-content .player {
+    position: relative;
+    width: 100%;
+    height: auto;
+    padding-top: 56.25%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    -webkit-border: 2px solid gainsboro;
+    -moz-border: 2px solid gainsboro;
+    border: 2px solid gainsboro;
+    -webkit-border-radius: 8px;
+    -moz-border-radius: 8px;
+    border-radius: 8px;
+    overflow: hidden;
+  }
+  .container-content .load-url {
+    position: relative;
+    margin-top: 50px;
+    width: 100%;
+    max-width: 800px;
+    height: fit-content;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    overflow: hidden;
+  }
+  .container-content .load-url #input-url {
+    flex-grow: 1;
+    padding: 12px;
+    color: gainsboro;
+    font-weight: 400;
+    letter-spacing: 0.5px;
+    white-space: nowrap;
+    -webkit-border: 2px solid gainsboro;
+    -moz-border: 2px solid gainsboro;
+    border: 2px solid gainsboro;
+    -webkit-border-radius: 6px;
+    -moz-border-radius: 6px;
+    border-radius: 6px;
+    background-color: #111;
+    overflow-x: auto;
+    overflow-y: hidden;
+  }
+  .container-content .load-url #input-url:focus {
+    -webkit-border: 2px solid #4169E1;
+    -moz-border: 2px solid #4169E1;
+    border: 2px solid #4169E1;
+    outline: none;
+  }
+  .container-content .load-url #input-url::placeholder {
+    color: #aaa;
+  }
+  .container-content .load-url #insert-url {
+    width: fit-content;
+    padding: 12px 15px;
+    margin-left: 5px;
+    color: #eee;
+    font-weight: 500;
+    letter-spacing: 0.5px;
+    -webkit-border: 2px solid gainsboro;
+    -moz-border: 2px solid gainsboro;
+    border: 2px solid gainsboro;
+    -webkit-border-radius: 6px;
+    -moz-border-radius: 6px;
+    border-radius: 6px;
+    background-color: #4169E1;
+    overflow: hidden;
+    cursor: pointer;
+  }
+</style>
+</head>
+<body>
+  <header>
+    <h2><a href="index.html">MP-Player</a></h2>
+    <div class="more-pages">
+      <a href="https://github.com/mp-player/media#Guide-and-Usage" target="_blank" rel="noopener">Guide & Usage</a>
+      <a href="index.html" active>Testing Player</a>
+    </div>
+  </header>
+  <div class="container-content">
+    <div class="player">
+      <div id="video"></div>
+    </div>
+    <div class="load-url">
+      <input id="input-url" type="url" placeholder="Paste the video URL here">
+      <button id="insert-url">Play</button>
+    </div>
+  </div>
+<script>
+  function loadUrl(videoUrl) {
+    var player = new MediaPlay("video", {
+      streamFile: {
+        src: `${videoUrl}`,
+        setMedia: {
+          autoplay: true,
+          preload: "auto",
+          loop: false,
+          poster: "",
+        },
+        configs: {
+          params: {
+            titles: {
+              name: "MP-Player",
+            },
+            waterMark: {
+              type: "image",
+              file: "files/images/favicon.png",
+              transparent: {
+                opacity: "0.3",
+              }
+            },
+            playerSettings: {
+              fitToScreen: true,
+              accentColor: "#4169E1",
+            },
+          }
+        }
+      }
+    });
+  }
+  loadUrl();
+  const inputUrl = document.querySelector("#input-url");
+  const insertUrl = document.querySelector("#insert-url");
+  insertUrl.addEventListener("click", (e)=> {
+    e.preventDefault();
+    var inputValue = inputUrl.value;
+    if (inputValue.startsWith("https://") || inputValue.startsWith("http://") || inputValue.startsWith("file:///") || inputValue.startsWith("/")) {
+      try {
+        eval(loadUrl(inputValue));
+      } catch (error) {
+        if (error) {
+          alert(error.message);
+        }
+      }
+    } else {
+      var errorUrl = (inputValue !== "") ? inputValue : "undefined";
+      alert("Error URL: "+errorUrl);
+    }
+  }, false);
+</script>
+</body>
+</html>
