@@ -1,6 +1,6 @@
 /*!
   Copyright (c) 2025 MP-Player (MediaPlay JS)
-  Source (https://github.com/mp-player/media/blob/master/files/source/mediaplay.js)
+  Source (https://github.com/mp-player/media/blob/master/files/sources/mediaplay.js)
   Licensed under MIT (https://github.com/mp-player/media/blob/master/LICENSE)
 */
 
