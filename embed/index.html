@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Embed | MP-Player</title>
+  <link href="../files/sources/mediaplay.css" rel="stylesheet">
+  <script src="../files/sources/mediaplay.js"></script>
+</head>
+<body>
+
+  <div id="video"></div>
+
+<script>
+  const videoUrl = requestURL();
+  const videoName = requestName();
+
+  if (videoUrl) {
+    MediaPlay("video", {
+      streamFile: {
+        src: `${videoUrl}`,
+        setMedia: {
+          autoplay: true,
+          preload: "auto",
+          loop: false,
+          poster: "",
+        },
+        configs: {
+          params: {
+            titles: {
+              name: `${videoName}`,
+               fonts: {
+                size: "14px",
+                weight: "400",
+                color: "rgb(255,255,255)",
+              }
+            },
+            playerSettings: {
+              fitToScreen: true,
+              accentColor: "rgb(65,105,225)",
+            },
+          }
+        }
+      }
+    });
+  } else {
+    self.location.href = "../index.html";
+  }
+</script>
+</body>
+</html>
