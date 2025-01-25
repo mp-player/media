@@ -783,23 +783,23 @@ function MediaPlay(elementId, {streamFile}) {
           if (captions && !captions2 && !captions3 && !captions4 && !captions5) {
             captionTracks(captions.file, "0");
           } else if (captions && captions2 && !captions3 && !captions4 && !captions5) {
-            captionTracks(captions.file, "0");
-            captionTracks(captions2.file, "1");
+            captionTracks(captions.file, "1");
+            captionTracks(captions2.file, "0");
           } else if (captions && captions2 && captions3 && !captions4 && !captions5) {
-            captionTracks(captions.file, "0");
+            captionTracks(captions.file, "2");
             captionTracks(captions2.file, "1");
-            captionTracks(captions3.file, "2");
+            captionTracks(captions3.file, "0");
           } else if (captions && captions2 && captions3 && captions4 && !captions5) {
-            captionTracks(captions.file, "0");
-            captionTracks(captions2.file, "1");
-            captionTracks(captions3.file, "2");
-            captionTracks(captions4.file, "3");
+            captionTracks(captions.file, "3");
+            captionTracks(captions2.file, "2");
+            captionTracks(captions3.file, "1");
+            captionTracks(captions4.file, "0");
           } else if (captions && captions2 && captions3 && captions4 && captions5) {
-            captionTracks(captions.file, "0");
-            captionTracks(captions2.file, "1");
+            captionTracks(captions.file, "4");
+            captionTracks(captions2.file, "3");
             captionTracks(captions3.file, "2");
-            captionTracks(captions4.file, "3");
-            captionTracks(captions5.file, "4");
+            captionTracks(captions4.file, "1");
+            captionTracks(captions5.file, "0");
           }
           var waterMark = streamFile.configs.params.waterMark;
           var docTitle = document.querySelector("title");
